@@ -15,37 +15,14 @@ export interface Addon {
 
 export const addons: Addon[] = [
   {
-    nome: "TrinityAdmin",
-    slug: "TrinityAdmin",
-    categoria: "GM / Administração",
-    descricao: "Painel de administração para TrinityCore.",
-    risco: "Médio",
-    peso: "Leve",
-    pcFraco: true,
-    compatibilidade: "3.3.5a build 12340",
-    gm: true,
-    destaque: true,
-    info: [
-      "Banir jogadores",
-      "Kick",
-      "Mute",
-      "Teleport",
-      "Spawn NPC",
-      "Reviver jogador",
-      "Enviar item",
-      "Ver posição"
-    ],
-    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/TrinityAdmin.zip"
-  },
-  {
     nome: "GMGenie",
     slug: "GMGenie",
     categoria: "GM / Administração",
-    descricao: "Ferramenta clássica para GMs em private servers.",
-    risco: "Baixo",
+    descricao: "Addon para Game Masters em servidores TrinityCore, com tickets, GM status, player tools e builder.",
+    risco: "Médio",
     peso: "Leve",
     pcFraco: true,
-    compatibilidade: "3.3.5a build 12340",
+    compatibilidade: "3.3.5a / 4.3.4 TrinityCore",
     gm: true,
     destaque: true,
     info: [
@@ -55,26 +32,7 @@ export const addons: Addon[] = [
       "Controle de eventos",
       "Lista de comandos"
     ],
-    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/GMGenie.zip"
-  },
-  {
-    nome: "GMBuddy",
-    slug: "GMBuddy",
-    categoria: "GM / Administração",
-    descricao: "Addon auxiliar para moderação e eventos.",
-    risco: "Baixo",
-    peso: "Leve",
-    pcFraco: true,
-    compatibilidade: "3.3.5a build 12340",
-    gm: true,
-    destaque: false,
-    info: [
-      "Gerenciar tickets",
-      "Teleport",
-      "Mensagens globais",
-      "Ferramentas de evento"
-    ],
-    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/GMBuddy.zip"
+    downloadUrl: "https://github.com/chocochaos/GMGenie/archive/refs/heads/master.zip"
   },
   {
     nome: "Atlas",
@@ -175,10 +133,17 @@ export const addons: Addon[] = [
     nome: "QuestHelper",
     slug: "QuestHelper",
     categoria: "Upar / Quest",
-    descricao: "Ajuda em quests e rotas de up.",
+    descricao: "Calcula as melhores rotas de up e mostra objetivos de quest no mapa.",
     risco: "Médio",
     peso: "Médio",
     pcFraco: false,
+    destaque: true,
+    info: [
+      "Rotas de leveling",
+      "Setas de direção",
+      "Database de quests",
+      "Fácil configuração"
+    ],
     compatibilidade: "3.3.5a build 12340",
     downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/QuestHelper.zip"
   },
@@ -208,10 +173,17 @@ export const addons: Addon[] = [
     nome: "AtlasLoot",
     slug: "AtlasLoot",
     categoria: "Itens / Dungeon",
-    descricao: "Mostra drops de bosses, raids e dungeons.",
+    descricao: "Banco de dados completo de loot para dungeons, raids e eventos mundiais.",
     risco: "Baixo",
     peso: "Médio",
     pcFraco: false,
+    destaque: true,
+    info: [
+      "Drop rate de itens",
+      "Loot de Dungeons",
+      "Receitas de Profissões",
+      "Itens de Facção"
+    ],
     compatibilidade: "3.3.5a build 12340",
     downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/AtlasLoot.zip"
   },
@@ -219,10 +191,17 @@ export const addons: Addon[] = [
     nome: "DBM",
     slug: "DBM",
     categoria: "Dungeon / Raid",
-    descricao: "Avisos de bosses para raid e dungeon.",
+    descricao: "Deadly Boss Mods: Avisos e timers cruciais para todas as lutas contra bosses.",
     risco: "Baixo",
     peso: "Médio",
     pcFraco: false,
+    destaque: true,
+    info: [
+      "Timers de habilidades",
+      "Alertas visuais",
+      "Avisos sonoros",
+      "Focado em ICC/RS"
+    ],
     compatibilidade: "3.3.5a build 12340",
     downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/DBM.zip"
   },
@@ -384,10 +363,17 @@ export const addons: Addon[] = [
     nome: "Bartender4",
     slug: "Bartender4",
     categoria: "Interface",
-    descricao: "Customização avançada das barras de ação.",
+    descricao: "Livre-se das barras padrão e crie um layout totalmente limpo e otimizado.",
     risco: "Baixo",
     peso: "Leve",
     pcFraco: true,
+    destaque: true,
+    info: [
+      "Barras customizáveis",
+      "Atalhos rápidos",
+      "Ajuste de transparência",
+      "Layouts prontos"
+    ],
     compatibilidade: "3.3.5a build 12340",
     downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/Bartender4.zip"
   },

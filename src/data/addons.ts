@@ -8,9 +8,147 @@ export interface Addon {
   pcFraco: boolean;
   compatibilidade: string;
   downloadUrl: string;
+  gm?: boolean;
+  destaque?: boolean;
+  info?: string[];
 }
 
 export const addons: Addon[] = [
+  {
+    nome: "TrinityAdmin",
+    slug: "TrinityAdmin",
+    categoria: "GM / Administração",
+    descricao: "Painel de administração para TrinityCore.",
+    risco: "Médio",
+    peso: "Leve",
+    pcFraco: true,
+    compatibilidade: "3.3.5a build 12340",
+    gm: true,
+    destaque: true,
+    info: [
+      "Banir jogadores",
+      "Kick",
+      "Mute",
+      "Teleport",
+      "Spawn NPC",
+      "Reviver jogador",
+      "Enviar item",
+      "Ver posição"
+    ],
+    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/TrinityAdmin.zip"
+  },
+  {
+    nome: "GMGenie",
+    slug: "GMGenie",
+    categoria: "GM / Administração",
+    descricao: "Ferramenta clássica para GMs em private servers.",
+    risco: "Baixo",
+    peso: "Leve",
+    pcFraco: true,
+    compatibilidade: "3.3.5a build 12340",
+    gm: true,
+    destaque: true,
+    info: [
+      "Teleport rápido",
+      "Comandos GM",
+      "Spawn de criaturas",
+      "Controle de eventos",
+      "Lista de comandos"
+    ],
+    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/GMGenie.zip"
+  },
+  {
+    nome: "GMBuddy",
+    slug: "GMBuddy",
+    categoria: "GM / Administração",
+    descricao: "Addon auxiliar para moderação e eventos.",
+    risco: "Baixo",
+    peso: "Leve",
+    pcFraco: true,
+    compatibilidade: "3.3.5a build 12340",
+    gm: true,
+    destaque: false,
+    info: [
+      "Gerenciar tickets",
+      "Teleport",
+      "Mensagens globais",
+      "Ferramentas de evento"
+    ],
+    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/GMBuddy.zip"
+  },
+  {
+    nome: "Atlas",
+    slug: "Atlas",
+    categoria: "GM / Administração",
+    descricao: "Mapa interno de dungeons e raids.",
+    risco: "Baixo",
+    peso: "Leve",
+    pcFraco: true,
+    compatibilidade: "3.3.5a build 12340",
+    gm: false,
+    destaque: false,
+    info: [
+      "Mapas internos",
+      "IDs de bosses",
+      "Ajuda para eventos"
+    ],
+    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/Atlas.zip"
+  },
+  {
+    nome: "AckisRecipeList",
+    slug: "AckisRecipeList",
+    categoria: "GM / Administração",
+    descricao: "Lista avançada de receitas e profissões.",
+    risco: "Baixo",
+    peso: "Médio",
+    pcFraco: false,
+    compatibilidade: "3.3.5a build 12340",
+    gm: false,
+    destaque: false,
+    info: [
+      "Ver receitas",
+      "Profissões",
+      "Controle de craft"
+    ],
+    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/AckisRecipeList.zip"
+  },
+  {
+    nome: "NPCScan",
+    slug: "NPCScan",
+    categoria: "GM / Administração",
+    descricao: "Detecta NPCs raros e especiais.",
+    risco: "Baixo",
+    peso: "Leve",
+    pcFraco: true,
+    compatibilidade: "3.3.5a build 12340",
+    gm: false,
+    destaque: true,
+    info: [
+      "Detecta NPC raro",
+      "Alerta sonoro",
+      "Ajuda em eventos"
+    ],
+    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/NPCScan.zip"
+  },
+  {
+    nome: "Altoholic",
+    slug: "Altoholic",
+    categoria: "GM / Administração",
+    descricao: "Gerencia personagens e inventários.",
+    risco: "Médio",
+    peso: "Pesado",
+    pcFraco: false,
+    compatibilidade: "3.3.5a build 12340",
+    gm: false,
+    destaque: false,
+    info: [
+      "Ver personagens",
+      "Inventário",
+      "Correio",
+      "Banco"
+    ],
+    downloadUrl: "https://raw.githubusercontent.com/NoM0Re/WoW-3.3.5a-Addons/main/src/Addons/Altoholic.zip"
+  },
   {
     nome: "Carbonite",
     slug: "Carbonite",

@@ -16,7 +16,11 @@ import {
   Zap,
   Weight,
   Monitor,
-  Star
+  Star,
+  Shield,
+  Sword,
+  Gavel,
+  Skull
 } from 'lucide-react';
 import { addons, Addon } from './data/addons';
 import { baixarAddon, copiarCaminho } from './utils/downloadAddon';
@@ -42,6 +46,8 @@ export default function App() {
   const [selectedRisk, setSelectedRisk] = useState("Todos");
   const [selectedWeight, setSelectedWeight] = useState("Todos");
   const [onlyPcFraco, setOnlyPcFraco] = useState(false);
+  const [onlyGm, setOnlyGm] = useState(false);
+  const [onlyRecomendados, setOnlyRecomendados] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredAddons = useMemo(() => {
@@ -52,9 +58,11 @@ export default function App() {
       const matchesRisk = selectedRisk === "Todos" || addon.risco === selectedRisk;
       const matchesWeight = selectedWeight === "Todos" || addon.peso === selectedWeight;
       const matchesPcFraco = !onlyPcFraco || addon.pcFraco === true;
-      return matchesSearch && matchesCategory && matchesRisk && matchesWeight && matchesPcFraco;
+      const matchesGm = !onlyGm || addon.gm === true;
+      const matchesRecomendados = !onlyRecomendados || addon.destaque === true;
+      return matchesSearch && matchesCategory && matchesRisk && matchesWeight && matchesPcFraco && matchesGm && matchesRecomendados;
     });
-  }, [searchTerm, selectedCategory, selectedRisk, selectedWeight, onlyPcFraco]);
+  }, [searchTerm, selectedCategory, selectedRisk, selectedWeight, onlyPcFraco, onlyGm, onlyRecomendados]);
 
   const featuredAddons = useMemo(() => {
     return addons.filter(a => FEATURED_SLUGS.includes(a.slug));
@@ -144,6 +152,30 @@ export default function App() {
               >
                 <Monitor className="w-4 h-4" />
                 PC Fraco
+              </button>
+
+              <button 
+                onClick={() => setOnlyGm(!onlyGm)}
+                className={`flex items-center justify-center gap-2 border rounded-2xl px-8 py-5 transition-all font-black uppercase text-xs tracking-widest ${
+                  onlyGm 
+                  ? 'bg-wow-gold border-white text-black shadow-[0_0_20px_rgba(248,216,120,0.4)]' 
+                  : 'bg-black/40 hover:bg-black/60 border-ice-blue/30 text-ice-blue'
+                }`}
+              >
+                <Shield className="w-4 h-4" />
+                Apenas GM
+              </button>
+
+              <button 
+                onClick={() => setOnlyRecomendados(!onlyRecomendados)}
+                className={`flex items-center justify-center gap-2 border rounded-2xl px-8 py-5 transition-all font-black uppercase text-xs tracking-widest ${
+                  onlyRecomendados 
+                  ? 'bg-blue-600/40 border-blue-400 text-blue-200 shadow-[0_0_20px_rgba(37,99,235,0.4)]' 
+                  : 'bg-black/40 hover:bg-black/60 border-ice-blue/30 text-ice-blue'
+                }`}
+              >
+                <Star className="w-4 h-4" />
+                Recomendados
               </button>
             </div>
 
@@ -240,6 +272,30 @@ export default function App() {
         </section>
       )}
 
+      {/* GM Section */}
+      {!searchTerm && (selectedCategory === "Todas" || selectedCategory === "GM / Administração") && !onlyPcFraco && (
+        <section className="container mx-auto px-4 mb-24">
+          <div className="flex flex-col md:flex-row md:items-center gap-6 mb-10 justify-center md:justify-start">
+            <div className="bg-wow-gold/10 p-3 rounded-2xl border border-wow-gold/30">
+              <Shield className="w-8 h-8 text-wow-gold fill-wow-gold" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-black uppercase italic tracking-tight text-wow-gold">Ferramentas para GMs e servidores private</h2>
+              <p className="text-ice-blue/60 font-bold max-w-2xl">
+                Addons usados em servidores private 3.3.5a para administração, eventos, comandos GM, tickets, teleportes e moderação.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <AddonCard addon={addons.find(a => a.nome === "TrinityAdmin")!} index={0} featured />
+            <AddonCard addon={addons.find(a => a.nome === "GMGenie")!} index={1} featured />
+            <AddonCard addon={addons.find(a => a.nome === "GMBuddy")!} index={2} />
+            <AddonCard addon={addons.find(a => a.nome === "NPCScan")!} index={3} featured />
+          </div>
+        </section>
+      )}
+
       {/* Main Grid */}
       <main id="addons-grid" className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
@@ -258,6 +314,8 @@ export default function App() {
                 setSelectedRisk("Todos");
                 setSelectedWeight("Todos");
                 setOnlyPcFraco(false);
+                setOnlyGm(false);
+                setOnlyRecomendados(false);
               }}
               className="text-wow-gold hover:text-white font-black text-[10px] tracking-widest flex items-center gap-2 px-6 py-3 border border-wow-gold/20 rounded-2xl transition-all uppercase"
             >
@@ -282,22 +340,43 @@ export default function App() {
       </main>
 
       {/* Tips Section */}
-      <section className="container mx-auto px-4 mt-32">
-        <div className="wow-card p-10 md:p-16 border-wow-gold/30 flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto overflow-hidden relative">
-          <div className="absolute -top-20 -right-20 w-64 h-64 bg-wow-gold/5 blur-[80px] rounded-full" />
-          <div className="bg-wow-gold/10 p-8 rounded-[32px] border border-wow-gold/20 relative z-10 shrink-0">
-            <Info className="w-16 h-16 text-wow-gold" />
+      <section className="container mx-auto px-4 mt-32 grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="wow-card p-10 border-wow-gold/30 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-wow-gold/5 blur-[50px] rounded-full" />
+          <div className="bg-wow-gold/10 p-6 rounded-2xl border border-wow-gold/20 relative z-10 shrink-0">
+            <Shield className="w-12 h-12 text-wow-gold" />
           </div>
-          <div className="relative z-10 text-center md:text-left">
-            <h2 className="text-4xl font-black uppercase mb-6 tracking-tight">Dica anti erro Lua</h2>
-            <p className="text-ice-blue/80 text-lg leading-relaxed font-bold mb-8 italic">
+          <div className="relative z-10">
+            <h2 className="text-2xl font-black uppercase mb-4 tracking-tight text-wow-gold">Informações úteis para GMs</h2>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] font-black uppercase tracking-widest text-ice-blue/80">
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-wow-gold" /> .gm on</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-wow-gold" /> .gm fly on</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-wow-gold" /> .appear</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-wow-gold" /> .summon</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-white" /> .modify speed</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-white" /> .npc add</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-white" /> .lookup item</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-white" /> .lookup spell</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> .lookup creature</div>
+              <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-red-500" /> .ticket on</div>
+            </div>
+            <p className="mt-6 text-[9px] text-red-400 font-bold uppercase italic">
+              * Alguns addons GM precisam permissões do servidor TrinityCore/AzerothCore.
+            </p>
+          </div>
+        </div>
+
+        <div className="wow-card p-10 border-ice-blue/30 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-ice-blue/5 blur-[50px] rounded-full" />
+          <div className="bg-wow-gold/10 p-6 rounded-2xl border border-wow-gold/20 relative z-10 shrink-0">
+            <Info className="w-12 h-12 text-wow-gold" />
+          </div>
+          <div className="relative z-10">
+            <h2 className="text-2xl font-black uppercase mb-4 tracking-tight">Dica anti erro Lua</h2>
+            <p className="text-ice-blue/80 text-sm leading-relaxed font-bold italic">
               “Antes de entrar no personagem, marque <span className="text-wow-gold">“Load out of date AddOns”</span>. 
               Se algum addon der erro Lua, teste ele sozinho e confira se é para WoW 3.3.5a / Interface 30300.”
             </p>
-            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-              <span className="bg-black/60 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-ice-blue border border-ice-blue/20">WotLK Support</span>
-              <span className="bg-black/60 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest text-wow-gold border border-wow-gold/20">Build 12340</span>
-            </div>
           </div>
         </div>
       </section>
@@ -348,6 +427,10 @@ function AddonCard({ addon, index, featured }: AddonCardProps) {
     if (category.includes("Itens") || category.includes("Dungeon") || category.includes("Raid")) return <Layers className="w-6 h-6" />;
     if (category.includes("Healer")) return <AlertTriangle className="w-6 h-6" />;
     if (category.includes("Interface")) return <Monitor className="w-6 h-6" />;
+    if (category.includes("GM") || category.includes("Administração")) return <Shield className="w-6 h-6" />;
+    if (category.includes("PvP") || category.includes("Arena")) return <Sword className="w-6 h-6" />;
+    if (category.includes("Profissão") || category.includes("Farm")) return <Gavel className="w-6 h-6" />;
+    if (category.includes("Dungeon") || category.includes("Raid")) return <Skull className="w-6 h-6" />;
     return <Zap className="w-6 h-6" />;
   };
 
@@ -356,25 +439,41 @@ function AddonCard({ addon, index, featured }: AddonCardProps) {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
-      className={`wow-card p-8 flex flex-col h-full group ${featured ? 'border-wow-gold/40 shadow-[0_0_20px_rgba(248,216,120,0.15)]' : ''}`}
+      className={`wow-card p-8 flex flex-col h-full group ${
+        addon.gm ? 'border-wow-gold/60 shadow-[0_0_30px_rgba(248,216,120,0.2)]' : 
+        featured ? 'border-wow-gold/40 shadow-[0_0_20px_rgba(248,216,120,0.15)]' : ''
+      }`}
     >
       <div className="flex justify-between items-start mb-8">
         <div className={`p-4 rounded-2xl border transition-all ${
+          addon.gm ? 'bg-wow-gold/20 border-wow-gold/50 shadow-[0_0_15px_rgba(248,216,120,0.3)]' :
           featured ? 'bg-wow-gold/10 border-wow-gold/30' : 'bg-ice-blue/5 border-ice-blue/20'
         }`}>
-          <div className={featured ? 'text-wow-gold' : 'text-ice-blue'}>
+          <div className={addon.gm || featured ? 'text-wow-gold' : 'text-ice-blue'}>
             {getIcon(addon.categoria)}
           </div>
         </div>
         
         <div className="flex flex-col items-end gap-2">
+          {addon.gm && (
+            <div className="wow-badge badge-gold flex items-center gap-1.5 animate-pulse">
+              <Shield className="w-3 h-3" />
+              GM TOOL
+            </div>
+          )}
+          {addon.destaque && (
+            <div className="wow-badge badge-blue flex items-center gap-1.5">
+              <Star className="w-3 h-3" />
+              RECOMENDADO
+            </div>
+          )}
           {addon.pcFraco && (
             <div className="wow-badge badge-green flex items-center gap-1.5">
               <Monitor className="w-3 h-3" />
               PC Fraco
             </div>
           )}
-          <span className={`wow-badge ${featured ? 'badge-gold' : ''}`}>
+          <span className={`wow-badge ${addon.gm || featured ? 'badge-gold' : ''}`}>
             {addon.categoria}
           </span>
         </div>
@@ -382,13 +481,26 @@ function AddonCard({ addon, index, featured }: AddonCardProps) {
 
       <div className="flex-1">
         <h3 className={`text-2xl font-black mb-3 group-hover:ice-glow transition-all uppercase tracking-tight leading-none ${
-          featured ? 'text-wow-gold' : 'text-white'
+          addon.gm || featured ? 'text-wow-gold' : 'text-white'
         }`}>
           {addon.nome}
         </h3>
         <p className="text-ice-blue/60 text-sm mb-8 leading-relaxed font-bold italic">
           {addon.descricao}
         </p>
+
+        {addon.info && addon.info.length > 0 && (
+          <div className="mb-8">
+            <span className="block text-[8px] font-black uppercase text-wow-gold tracking-[0.2em] mb-3">Funções:</span>
+            <div className="flex flex-wrap gap-2">
+              {addon.info.map((tip, i) => (
+                <span key={i} className="text-[9px] font-bold text-ice-blue/70 bg-black/40 px-2 py-1 rounded-md border border-white/5 lowercase">
+                  • {tip}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-4 mb-10">
           <div className="bg-black/40 p-4 rounded-2xl border border-white/5">
